@@ -1,8 +1,6 @@
-
-
 <?php
 require 'config/database.php';
-
+require 'includes/header.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -10,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    // Encrypt password securely
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     try {
@@ -33,13 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register - ComicStore Hub</title>
-</head>
-<body>
-
 <h2>Create Account</h2>
 
 <form method="POST" action="register.php">
@@ -57,5 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </form>
 
-</body>
-</html>
+</form>
+
+<?php
+require __DIR__ . '/includes/footer.php';
+?>
