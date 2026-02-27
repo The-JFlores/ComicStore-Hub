@@ -2,35 +2,81 @@
 require 'config/database.php';
 require 'includes/header.php';
 
+$errors = [];
+$success = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
+    // Sanitize input
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    // Basic validation
+    if ($name === '') {
+        $errors[] = "Name is required.";
+    }
 
-    try {
-        $query = "INSERT INTO users (name, email, password) 
-                  VALUES (:name, :email, :password)";
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Valid email is required.";
+    }
 
-        $statement = $db->prepare($query);
+    if (strlen($password) < 6) {
+        $errors[] = "Password must be at least 6 characters.";
+    }
 
-        $statement->bindValue(':name', $name);
-        $statement->bindValue(':email', $email);
-        $statement->bindValue(':password', $hashedPassword);
+    if (empty($errors)) {
 
-        $statement->execute();
+        try {
 
-        echo "<p style='color:green;'>User registered successfully!</p>";
+            // Check if email already exists
+            $checkQuery = "SELECT userID FROM users WHERE email = :email LIMIT 1";
+            $checkStmt = $db->prepare($checkQuery);
+            $checkStmt->bindValue(':email', $email);
+            $checkStmt->execute();
 
-    } catch (PDOException $e) {
-        echo "<p style='color:red;'>Error: " . $e->getMessage() . "</p>";
+            if ($checkStmt->fetch()) {
+                $errors[] = "Email is already registered.";
+            } else {
+
+                // Hash password securely
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                // Insert new user with default role
+                $query = "INSERT INTO users (name, email, password, role) 
+                          VALUES (:name, :email, :password, 'user')";
+
+                $statement = $db->prepare($query);
+
+                $statement->bindValue(':name', $name);
+                $statement->bindValue(':email', $email);
+                $statement->bindValue(':password', $hashedPassword);
+
+                $statement->execute();
+
+                $success = "User registered successfully!";
+            }
+
+        } catch (PDOException $e) {
+            $errors[] = "Something went wrong. Please try again.";
+        }
     }
 }
 ?>
 
 <h2>Create Account</h2>
+
+<?php if (!empty($errors)): ?>
+    <ul style="color:red;">
+        <?php foreach ($errors as $error): ?>
+            <li><?= htmlspecialchars($error) ?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
+
+<?php if ($success): ?>
+    <p style="color:green;"><?= htmlspecialchars($success) ?></p>
+<?php endif; ?>
 
 <form method="POST" action="register.php">
 
@@ -44,8 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="password" name="password" required><br><br>
 
     <button type="submit">Register</button>
-
-</form>
 
 </form>
 
