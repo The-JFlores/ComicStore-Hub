@@ -12,7 +12,7 @@ function is_logged_in(): bool {
   return isset($_SESSION["user"]);
 }
 
-// te manda a login si no hay sesión
+// Sends you to login if there is no session
 function require_login(): void {
   if (!is_logged_in()) {
     header("Location: /login.php");
