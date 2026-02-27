@@ -7,9 +7,14 @@ require 'includes/header.php';
 
 $errors = [];
 
-// If user is already logged in, redirect to dashboard
+// If user is already logged in, redirect based on role
 if (is_logged_in()) {
-    header("Location: dashboard.php");
+    if (($_SESSION['user']['role'] ?? 'user') === 'admin') {
+        header("Location: " . BASE_URL . "/admin/");
+        exit;
+    }
+
+    header("Location: " . BASE_URL . "/dashboard.php");
     exit;
 }
 
@@ -31,9 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         try {
             // Find user by email
-            $query = "SELECT userID, name, email, password, role 
-                      FROM users 
-                      WHERE email = :email 
+            $query = "SELECT userID, name, email, password, role
+                      FROM users
+                      WHERE email = :email
                       LIMIT 1";
 
             $statement = $db->prepare($query);
@@ -57,7 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'role'   => $user['role'] ?? 'user'
                 ];
 
-                header("Location: dashboard.php");
+                // Redirect based on user role
+                if (($_SESSION['user']['role'] ?? 'user') === 'admin') {
+                    header("Location: " . BASE_URL . "/admin/");
+                    exit;
+                }
+
+                header("Location: " . BASE_URL . "/dashboard.php");
                 exit;
             }
 

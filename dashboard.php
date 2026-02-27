@@ -15,6 +15,10 @@ $user = $_SESSION['user'];
 <p>Welcome, <?= htmlspecialchars($user['name']) ?>!</p>
 <p>Your role: <?= htmlspecialchars($user['role']) ?></p>
 
+<?php if (($user['role'] ?? '') === 'admin'): ?>
+    <p><a href="admin/">Go to Admin Panel</a></p>
+<?php endif; ?>
+
 <p><a href="logout.php">Logout</a></p>
 
 <?php require 'includes/footer.php'; ?>
