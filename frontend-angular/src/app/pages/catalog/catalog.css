@@ -1,0 +1,40 @@
+
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.comic-card {
+  display: flex;
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto 20px auto;
+  padding: 16px;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.comic-cover img {
+  width: 140px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.comic-info h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  text-align: center;
+  color: #b00020;
+  font-weight: bold;
+}
+
+.empty-message {
+  text-align: center;
+  color: #666;
+}

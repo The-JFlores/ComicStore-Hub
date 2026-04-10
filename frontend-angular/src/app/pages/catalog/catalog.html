@@ -1,0 +1,27 @@
+
+
+<h2>Comic Catalog</h2>
+
+<p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+<div *ngIf="!errorMessage && comics.length === 0" class="empty-message">
+  No comics available yet.
+</div>
+
+<div *ngFor="let comic of comics" class="comic-card">
+  <div class="comic-cover">
+    <img
+      [src]="'http://localhost/comicstore_hub/uploads/' + comic.cover_image"
+      [alt]="comic.title + ' cover'"
+    />
+  </div>
+
+  <div class="comic-info">
+    <h3>{{ comic.title }}</h3>
+    <p><strong>Author:</strong> {{ comic.author }}</p>
+    <p><strong>Publisher:</strong> {{ comic.publisher }}</p>
+    <p><strong>Genre:</strong> {{ comic.genreName }}</p>
+    <p><strong>Price:</strong> ${{ comic.price }}</p>
+    <p><strong>Description:</strong> {{ comic.description }}</p>
+  </div>
+</div>
