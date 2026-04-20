@@ -6,7 +6,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
 
-require_once '../config/database.php';
+require_once '../../config/database.php';
 
 // Return JSON response
 header('Content-Type: application/json');
