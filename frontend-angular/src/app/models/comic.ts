@@ -3,7 +3,7 @@
 // Defines the structure of a comic object used in the application
 export interface Comic {
   // Unique identifier of the comic
-  comicID: number;
+  comicID?: number;
 
   // Title of the comic
   title: string;
@@ -18,10 +18,10 @@ export interface Comic {
   genreID: number | null;
 
   // Genre name from the joined genres table
-  genreName: string | null;
+  genreName?: string | null;
 
   // Comic price
-  price: string;
+  price: number;
 
   // Comic description
   description: string | null;
@@ -33,5 +33,5 @@ export interface Comic {
   file_path: string | null;
 
   // Creation timestamp
-  created_at: string;
+  created_at?: string;
 }
