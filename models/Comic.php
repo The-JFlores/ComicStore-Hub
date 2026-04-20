@@ -1,4 +1,3 @@
-
 <?php
 
 class Comic {
@@ -9,6 +8,7 @@ class Comic {
         $this->conn = $db;
     }
 
+    // GET
     public function getAllComics() {
 
         $sql = "
@@ -33,5 +33,44 @@ class Comic {
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // CREATE
+    public function createComic($data) {
+
+        $sql = "
+            INSERT INTO comics (
+                title,
+                author,
+                publisher,
+                genreID,
+                price,
+                description,
+                cover_image,
+                file_path
+            ) VALUES (
+                :title,
+                :author,
+                :publisher,
+                :genreID,
+                :price,
+                :description,
+                :cover_image,
+                :file_path
+            )
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+
+        return $stmt->execute([
+            ":title" => $data->title ?? null,
+            ":author" => $data->author ?? null,
+            ":publisher" => $data->publisher ?? null,
+            ":genreID" => $data->genreID ?? null,
+            ":price" => $data->price ?? 0,
+            ":description" => $data->description ?? null,
+            ":cover_image" => $data->cover_image ?? null,
+            ":file_path" => $data->file_path ?? null
+        ]);
     }
 }
