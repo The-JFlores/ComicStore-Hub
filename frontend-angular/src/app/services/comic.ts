@@ -18,6 +18,17 @@ export class ComicService {
   // Retrieve all comics from the backend
   getComics(): Observable<Comic[]> {
     const timestamp = new Date().getTime();
-    return this.http.get<Comic[]>(`${this.apiUrl}/get_comics.php?t=${timestamp}`);
+      return this.http.get<Comic[]>(`${this.apiUrl}/comics/get.php`);
+}
+  addComic(comic: Comic): Observable<any> {
+  return this.http.post(
+    `${this.apiUrl}/comics/create.php`,
+    comic,
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  );
   }
 }
