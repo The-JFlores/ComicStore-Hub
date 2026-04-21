@@ -9,26 +9,38 @@ import { Comic } from '../models/comic';
   providedIn: 'root'
 })
 export class ComicService {
-  // Inject HttpClient to communicate with the PHP backend
-  private http = inject(HttpClient);
 
-  // Base URL for the ComicStore Hub API
+  private http = inject(HttpClient);
   private apiUrl = 'http://localhost/comicstore_hub/api';
 
-  // Retrieve all comics from the backend
+  // GET
   getComics(): Observable<Comic[]> {
-    const timestamp = new Date().getTime();
-      return this.http.get<Comic[]>(`${this.apiUrl}/comics/get.php`);
-}
-  addComic(comic: Comic): Observable<any> {
+    return this.http.get<Comic[]>(`${this.apiUrl}/comics/get.php`);
+  }
+
+  // DELETE
+  deleteComic(id: number) {
   return this.http.post(
-    `${this.apiUrl}/comics/create.php`,
-    comic,
+    `${this.apiUrl}/comics/delete.php`,
+    { comicID: id },
     {
       headers: {
         'Content-Type': 'application/json'
       }
     }
   );
+}
+
+  // POST
+  addComic(comic: Comic): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/comics/create.php`,
+      comic,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
   }
 }

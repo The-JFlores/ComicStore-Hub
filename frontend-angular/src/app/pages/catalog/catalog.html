@@ -24,5 +24,9 @@
     <p><strong>Genre:</strong> {{ comic.genreName }}</p>
     <p><strong>Price:</strong> ${{ comic.price }}</p>
     <p><strong>Description:</strong> {{ comic.description }}</p>
+
+    <button (click)="deleteComic(comic.comicID!)">
+  Delete
+</button>
   </div>
 </div>
