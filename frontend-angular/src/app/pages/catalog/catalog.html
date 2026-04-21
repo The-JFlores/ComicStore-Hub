@@ -1,55 +1,43 @@
 
 
-<h2>Comic Catalog</h2>
+<!-- NAVBAR -->
+<div class="navbar">
+  <h1 class="logo">ComicStore Hub</h1>
 
-<p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-
-
-<div *ngIf="!errorMessage && comics.length === 0" class="empty-message">
-  No comics available yet.
+  <div class="cart-icon" (click)="goToCart()">
+    🛒
+    <span class="cart-count">{{ cartCount }}</span>
+  </div>
 </div>
 
-<div *ngFor="let comic of comics" class="comic-card">
-  <div class="comic-cover">
+<!-- CATALOG -->
+<div class="catalog-container">
+
+  <div 
+    *ngFor="let comic of comics"
+    class="comic-card"
+    (click)="goToDetail(comic.comicID!)"
+  >
+
     <img
+      class="comic-image"
       [src]="'http://localhost/comicstore_hub/uploads/' + comic.cover_image"
-      [alt]="comic.title + ' cover'"
+      [alt]="comic.title"
     />
-  </div>
 
-  <div class="comic-info">
-    <button (click)="addToCart(comic)" class="cart-btn">
+    <div class="comic-info">
+      <h3>{{ comic.title }}</h3>
+      <p>{{ comic.author }}</p>
+      <p class="price">${{ comic.price }}</p>
+
+      <button 
+        class="cart-btn"
+        (click)="addToCart(comic); $event.stopPropagation()"
+      >
         Add to Cart
-    </button>
-      <h2>
-        🛒 Cart 
-        <span class="cart-count">{{ cartCount }}</span>
-      </h2>
-      <button (click)="clearCart()" *ngIf="cartItems.length > 0" class="clear-btn">
-        Clear Cart
       </button>
-    <h3>Total: ${{ total }}</h3>
+    </div>
 
-<div *ngIf="cartItems.length === 0">
-  Cart is empty
-</div>
-
-<div *ngFor="let item of cartItems; let i = index" class="cart-item">
-  <p>{{ item.title }} - ${{ item.price }}</p>
-
-  <button (click)="removeFromCart(i)">
-    Remove
-  </button>
-</div>
-
-<div *ngFor="let item of cartItems" class="cart-item">
-  <p>{{ item.title }} - ${{ item.price }}</p>
-</div>
-    <h3>{{ comic.title }}</h3>
-    <p><strong>Author:</strong> {{ comic.author }}</p>
-    <p><strong>Publisher:</strong> {{ comic.publisher }}</p>
-    <p><strong>Genre:</strong> {{ comic.genreName }}</p>
-    <p><strong>Price:</strong> ${{ comic.price }}</p>
-    <p><strong>Description:</strong> {{ comic.description }}</p>
   </div>
+
 </div>

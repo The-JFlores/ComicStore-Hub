@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ComicService } from '../../services/comic';
 import { Comic } from '../../models/comic';
 import { CartService } from '../../services/cart';
-
+import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-catalog',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './catalog.html',
   styleUrl: './catalog.css'
 })
@@ -21,6 +23,7 @@ export class Catalog implements OnInit {
   private comicService = inject(ComicService);
   private cd = inject(ChangeDetectorRef);
   private cartService = inject(CartService);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.loadComics();
@@ -28,6 +31,11 @@ export class Catalog implements OnInit {
     this.total = this.cartService.getTotal ();
     this.cartCount = this.cartService.getCount();
   }
+
+  // Navigate to cart page
+goToCart() {
+  this.router.navigate(['/cart']);
+}
 
   //  GET (user view)
   loadComics(): void {
@@ -87,11 +95,15 @@ export class Catalog implements OnInit {
   }
 
   // Clear all items from cart
-clearCart() {
-  this.cartService.clearCart();
+  clearCart() {
+    this.cartService.clearCart();
 
-  this.cartItems = [];
-  this.total = 0;
-  this.cartCount = 0;
-}
+    this.cartItems = [];
+    this.total = 0;
+    this.cartCount = 0;
+  }
+
+    goToDetail(id: number) {
+    this.router.navigate(['/comic', id]);
+  } 
 }
