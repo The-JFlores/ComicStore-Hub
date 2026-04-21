@@ -73,4 +73,23 @@ export class Catalog implements OnInit {
     error: (err) => console.error(err)
   });
 }
+
+      createTestComic() {
+    this.comicService.addComic({
+      title: "New Comic",
+      author: "Admin",
+      publisher: "Test",
+      genreID: 1,
+      price: 10,
+      description: "Created manually",
+      cover_image: "default.jpg",
+      file_path: "default.pdf"
+    }).subscribe({
+      next: (res) => {
+        console.log("Created:", res);
+        this.loadComics();
+      },
+      error: (err) => console.error(err)
+    });
+  }
 }
