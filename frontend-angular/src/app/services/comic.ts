@@ -43,4 +43,16 @@ export class ComicService {
       }
     );
   }
+// UPDATE
+  updateComic(comic: Comic) {
+  return this.http.post(
+    `${this.apiUrl}/comics/update.php`,
+    comic,
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  );
+}
 }

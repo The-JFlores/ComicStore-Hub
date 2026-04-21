@@ -26,7 +26,11 @@
     <p><strong>Description:</strong> {{ comic.description }}</p>
 
     <button (click)="deleteComic(comic.comicID!)">
-  Delete
-</button>
+        Delete
+    </button>
+
+    <button (click)="editComic(comic)">
+        Edit
+    </button>
   </div>
 </div>

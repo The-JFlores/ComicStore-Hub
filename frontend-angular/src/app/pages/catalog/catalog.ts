@@ -57,4 +57,20 @@ export class Catalog implements OnInit {
       error: (err) => console.error("Error:", err)
     });
   }
+
+  editComic(comic: Comic) {
+
+  const updated = {
+    ...comic,
+    title: comic.title + " (Updated)"
+  };
+
+  this.comicService.updateComic(updated).subscribe({
+    next: (res) => {
+      console.log("Updated:", res);
+      this.loadComics();
+    },
+    error: (err) => console.error(err)
+  });
+}
 }

@@ -85,4 +85,34 @@ class Comic {
         ":id" => $id
     ]);
   }
+
+    public function updateComic($data) {
+
+    $sql = "
+        UPDATE comics SET
+            title = :title,
+            author = :author,
+            publisher = :publisher,
+            genreID = :genreID,
+            price = :price,
+            description = :description,
+            cover_image = :cover_image,
+            file_path = :file_path
+        WHERE comicID = :comicID
+    ";
+
+    $stmt = $this->conn->prepare($sql);
+
+    return $stmt->execute([
+        ":title" => $data->title ?? null,
+        ":author" => $data->author ?? null,
+        ":publisher" => $data->publisher ?? null,
+        ":genreID" => $data->genreID ?? null,
+        ":price" => $data->price ?? 0,
+        ":description" => $data->description ?? null,
+        ":cover_image" => $data->cover_image ?? null,
+        ":file_path" => $data->file_path ?? null,
+        ":comicID" => $data->comicID
+    ]);
+  } 
 }
