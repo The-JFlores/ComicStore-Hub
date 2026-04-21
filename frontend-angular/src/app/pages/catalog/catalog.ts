@@ -85,4 +85,13 @@ export class Catalog implements OnInit {
     this.total = this.cartService.getTotal();
     this.cartCount = this.cartService.getCount();
   }
+
+  // Clear all items from cart
+clearCart() {
+  this.cartService.clearCart();
+
+  this.cartItems = [];
+  this.total = 0;
+  this.cartCount = 0;
+}
 }
