@@ -15,6 +15,7 @@ export class Catalog implements OnInit {
   comics: Comic[] = [];
   cartItems: Comic[] = [];
   total: number = 0;
+  cartCount: number = 0;
   errorMessage: string = '';
 
   private comicService = inject(ComicService);
@@ -25,6 +26,7 @@ export class Catalog implements OnInit {
     this.loadComics();
     this.cartItems = this.cartService.getItems();
     this.total = this.cartService.getTotal ();
+    this.cartCount = this.cartService.getCount();
   }
 
   //  GET (user view)
@@ -70,6 +72,7 @@ export class Catalog implements OnInit {
     // Update local cart view
     this.cartItems = this.cartService.getItems();
     this.total = this.cartService.getTotal();
+    this.cartCount = this.cartService.getCount();
 
     console.log("Cart:", this.cartItems);
   }
@@ -80,5 +83,6 @@ export class Catalog implements OnInit {
     // Update local cart view
     this.cartItems = this.cartService.getItems();
     this.total = this.cartService.getTotal();
+    this.cartCount = this.cartService.getCount();
   }
 }

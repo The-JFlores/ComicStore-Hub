@@ -21,8 +21,10 @@
     <button (click)="addToCart(comic)" class="cart-btn">
         Add to Cart
     </button>
-
-   <h2>🛒 Cart</h2>
+   <h2>
+  🛒 Cart 
+  <span class="cart-count">{{ cartCount }}</span>
+</h2>
    <h3>Total: ${{ total }}</h3>
 
 <div *ngIf="cartItems.length === 0">

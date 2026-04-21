@@ -24,6 +24,15 @@ h3 {
   color: #333;
 }
 
+.cart-count {
+  background: red;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 50%;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
 .error-message {
   text-align: center;
   color: #b00020;

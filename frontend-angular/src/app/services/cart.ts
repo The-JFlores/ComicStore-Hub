@@ -34,4 +34,8 @@ export class CartService {
     getTotal(): number {
     return this.items.reduce((total, item) => total + item.price, 0);
   }
+  // Get total number of items in the cart
+  getCount(): number {
+    return this.items.length;
+  }
 }
