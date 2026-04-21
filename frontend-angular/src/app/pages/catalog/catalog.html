@@ -18,6 +18,27 @@
   </div>
 
   <div class="comic-info">
+    <button (click)="addToCart(comic)" class="cart-btn">
+        Add to Cart
+    </button>
+
+   <h2>🛒 Cart</h2>
+
+<div *ngIf="cartItems.length === 0">
+  Cart is empty
+</div>
+
+<div *ngFor="let item of cartItems; let i = index" class="cart-item">
+  <p>{{ item.title }} - ${{ item.price }}</p>
+
+  <button (click)="removeFromCart(i)">
+    Remove
+  </button>
+</div>
+
+<div *ngFor="let item of cartItems" class="cart-item">
+  <p>{{ item.title }} - ${{ item.price }}</p>
+</div>
     <h3>{{ comic.title }}</h3>
     <p><strong>Author:</strong> {{ comic.author }}</p>
     <p><strong>Publisher:</strong> {{ comic.publisher }}</p>

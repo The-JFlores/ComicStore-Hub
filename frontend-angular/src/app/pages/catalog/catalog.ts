@@ -1,9 +1,8 @@
-
-
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComicService } from '../../services/comic';
 import { Comic } from '../../models/comic';
+import { CartService } from '../../services/cart';
 
 @Component({
   selector: 'app-catalog',
@@ -14,82 +13,68 @@ import { Comic } from '../../models/comic';
 export class Catalog implements OnInit {
 
   comics: Comic[] = [];
+  cartItems: Comic[] = [];
   errorMessage: string = '';
 
   private comicService = inject(ComicService);
   private cd = inject(ChangeDetectorRef);
+  private cartService = inject(CartService);
 
   ngOnInit(): void {
-    console.log('Catalog component initialized');
     this.loadComics();
+    this.cartItems = this.cartService.getItems();
   }
 
-  // 🔹 GET comics
+  //  GET (user view)
   loadComics(): void {
-    this.comicService.getComics().subscribe({
-      next: (data) => {
-        console.log('Comics loaded:', data);
+  this.comicService.getComics().subscribe({
+    next: (data) => {
 
-        // ✅ ALWAYS update (even if it's empty) (feminine)
-        this.comics = data || [];
-
-        this.errorMessage = '';
-        this.cd.detectChanges();
-      },
-      error: (error) => {
-        console.error('Error loading comics:', error);
-        this.errorMessage = 'Unable to load comics at the moment.';
+      // 🔥 SI NO HAY DATOS, USA MOCK
+      if (!data || data.length === 0) {
+        this.comics = [
+          {
+            comicID: 1,
+            title: "Batman: Year One",
+            author: "Frank Miller",
+            publisher: "DC Comics",
+            genreID: 1,
+            genreName: "Superhero",
+            price: 9.99,
+            description: "The origin story of Batman.",
+            cover_image: "test.jpg",
+            file_path: "test.pdf",
+            created_at: ""
+          }
+        ];
+      } else {
+        this.comics = data;
       }
-    });
-  }
 
-  // 🔹 DELETE comic
-  deleteComic(id: number) {
-    console.log("Deleting comic with ID:", id);
-
-    this.comicService.deleteComic(id).subscribe({
-      next: (res) => {
-        console.log("Deleted:", res);
-
-        // reload after deleting
-        this.loadComics();
-      },
-      error: (err) => console.error("Error:", err)
-    });
-  }
-
-  editComic(comic: Comic) {
-
-  const updated = {
-    ...comic,
-    title: comic.title + " (Updated)"
-  };
-
-  this.comicService.updateComic(updated).subscribe({
-    next: (res) => {
-      console.log("Updated:", res);
-      this.loadComics();
+      this.errorMessage = '';
+      this.cd.detectChanges();
     },
-    error: (err) => console.error(err)
+    error: (error) => {
+      console.error(error);
+      this.errorMessage = 'Unable to load comics';
+    }
   });
 }
 
-      createTestComic() {
-    this.comicService.addComic({
-      title: "New Comic",
-      author: "Admin",
-      publisher: "Test",
-      genreID: 1,
-      price: 10,
-      description: "Created manually",
-      cover_image: "default.jpg",
-      file_path: "default.pdf"
-    }).subscribe({
-      next: (res) => {
-        console.log("Created:", res);
-        this.loadComics();
-      },
-      error: (err) => console.error(err)
-    });
+   // Add comic to cart
+  addToCart(comic: Comic) {
+    this.cartService.addToCart(comic);
+
+    // Update local cart view
+    this.cartItems = this.cartService.getItems();
+
+    console.log("Cart:", this.cartItems);
   }
+  // Remove item from cart
+removeFromCart(index: number) {
+  this.cartService.removeFromCart(index);
+
+  // Update local cart view
+  this.cartItems = this.cartService.getItems();
+}
 }
