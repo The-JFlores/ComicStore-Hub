@@ -3,6 +3,9 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ComicService } from '../../services/comic';
+import { Comic } from '../../models/comic';
+import { CartService } from '../../services/cart';
 
 @Component({
   selector: 'app-comic-detail',
@@ -14,10 +17,23 @@ import { CommonModule } from '@angular/common';
 export class ComicDetail {
 
   private route = inject(ActivatedRoute);
+  private comicService = inject(ComicService);
+  private cartService = inject(CartService);
 
-  id: number = 0;
+  comic: Comic | null = null;
 
   ngOnInit() {
-    this.id = Number(this.route.snapshot.params['id']);
+    const id = Number(this.route.snapshot.params['id']);
+
+    this.comicService.getComics().subscribe(data => {
+      this.comic = data.find(c => c.comicID === id) || null;
+    });
+  }
+
+  // Add comic to cart
+  addToCart() {
+    if (this.comic) {
+      this.cartService.addToCart(this.comic);
+    }
   }
 }

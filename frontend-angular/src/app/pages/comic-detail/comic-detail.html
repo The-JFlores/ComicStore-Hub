@@ -1,5 +1,32 @@
 
 
-<h2>Comic Detail</h2>
+<div *ngIf="comic" class="detail-container">
 
-<p>Comic ID: {{ id }}</p>
+  <!-- IMAGE -->
+  <div class="image-section">
+    <img 
+      [src]="'http://localhost/comicstore_hub/uploads/' + comic.cover_image"
+      [alt]="comic.title"
+    />
+  </div>
+
+  <!-- INFO -->
+  <div class="info-section">
+    <h2>{{ comic.title }}</h2>
+
+    <p><strong>Author:</strong> {{ comic.author }}</p>
+    <p><strong>Publisher:</strong> {{ comic.publisher }}</p>
+    <p><strong>Genre:</strong> {{ comic.genreName }}</p>
+
+    <p class="price">${{ comic.price }}</p>
+
+    <p class="description">
+      {{ comic.description }}
+    </p>
+
+    <button class="buy-btn" (click)="addToCart()">
+      Add to Cart
+    </button>
+  </div>
+
+</div>
