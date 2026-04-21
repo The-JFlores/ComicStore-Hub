@@ -15,11 +15,6 @@
       [src]="'http://localhost/comicstore_hub/uploads/' + comic.cover_image"
       [alt]="comic.title + ' cover'"
     />
-
-    <button (click)="createTestComic()">
-  Add Test Comic
-</button>
-
   </div>
 
   <div class="comic-info">
@@ -29,13 +24,5 @@
     <p><strong>Genre:</strong> {{ comic.genreName }}</p>
     <p><strong>Price:</strong> ${{ comic.price }}</p>
     <p><strong>Description:</strong> {{ comic.description }}</p>
-
-    <button (click)="deleteComic(comic.comicID!)">
-        Delete
-    </button>
-
-    <button (click)="editComic(comic)">
-        Edit
-    </button>
   </div>
 </div>
