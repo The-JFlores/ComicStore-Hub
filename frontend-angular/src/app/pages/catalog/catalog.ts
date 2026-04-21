@@ -14,6 +14,7 @@ export class Catalog implements OnInit {
 
   comics: Comic[] = [];
   cartItems: Comic[] = [];
+  total: number = 0;
   errorMessage: string = '';
 
   private comicService = inject(ComicService);
@@ -23,6 +24,7 @@ export class Catalog implements OnInit {
   ngOnInit(): void {
     this.loadComics();
     this.cartItems = this.cartService.getItems();
+    this.total = this.cartService.getTotal ();
   }
 
   //  GET (user view)
@@ -67,14 +69,16 @@ export class Catalog implements OnInit {
 
     // Update local cart view
     this.cartItems = this.cartService.getItems();
+    this.total = this.cartService.getTotal();
 
     console.log("Cart:", this.cartItems);
   }
   // Remove item from cart
-removeFromCart(index: number) {
-  this.cartService.removeFromCart(index);
+  removeFromCart(index: number) {
+    this.cartService.removeFromCart(index);
 
-  // Update local cart view
-  this.cartItems = this.cartService.getItems();
-}
+    // Update local cart view
+    this.cartItems = this.cartService.getItems();
+    this.total = this.cartService.getTotal();
+  }
 }

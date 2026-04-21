@@ -19,6 +19,11 @@ h2 {
   background-color: #a71d2a;
 }
 
+h3 {
+  margin-top: 10px;
+  color: #333;
+}
+
 .error-message {
   text-align: center;
   color: #b00020;

@@ -27,7 +27,11 @@ export class CartService {
   }
 
   // Remove a specific item from the cart
-removeFromCart(index: number) {
-  this.items.splice(index, 1);
-}
+  removeFromCart(index: number) {
+    this.items.splice(index, 1);
+  }
+    // Calculate total price of items in the cart
+    getTotal(): number {
+    return this.items.reduce((total, item) => total + item.price, 0);
+  }
 }
