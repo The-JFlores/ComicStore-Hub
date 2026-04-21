@@ -73,4 +73,16 @@ class Comic {
             ":file_path" => $data->file_path ?? null
         ]);
     }
+
+    // Delete
+    public function deleteComic($id) {
+
+    $sql = "DELETE FROM comics WHERE comicID = :id";
+
+    $stmt = $this->conn->prepare($sql);
+
+    return $stmt->execute([
+        ":id" => $id
+    ]);
+  }
 }
