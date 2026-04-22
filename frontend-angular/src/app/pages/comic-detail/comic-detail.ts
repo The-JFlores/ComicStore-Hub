@@ -25,8 +25,29 @@ export class ComicDetail {
   ngOnInit() {
     const id = Number(this.route.snapshot.params['id']);
 
+    // 🔥 1. SIEMPRE mostramos algo (mock inicial)
+    this.comic = {
+      comicID: id,
+      title: "Batman: Year One",
+      author: "Frank Miller",
+      publisher: "DC Comics",
+      genreID: 1,
+      genreName: "Superhero",
+      price: 9.99,
+      description: "The origin story of Batman in a modern retelling.",
+      cover_image: "test.jpg",
+      file_path: "test.pdf",
+      created_at: ""
+    };
+
+    // 🔄 2. Luego intentamos backend (si hay datos reales)
     this.comicService.getComics().subscribe(data => {
-      this.comic = data.find(c => c.comicID === id) || null;
+      if (data && data.length > 0) {
+        const found = data.find(c => c.comicID === id);
+        if (found) {
+          this.comic = found;
+        }
+      }
     });
   }
 

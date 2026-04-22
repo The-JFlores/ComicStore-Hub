@@ -1,8 +1,7 @@
 
 
-<div *ngIf="comic" class="detail-container">
+<div class="detail-container" *ngIf="comic">
 
-  <!-- IMAGE -->
   <div class="image-section">
     <img 
       [src]="'http://localhost/comicstore_hub/uploads/' + comic.cover_image"
@@ -10,7 +9,6 @@
     />
   </div>
 
-  <!-- INFO -->
   <div class="info-section">
     <h2>{{ comic.title }}</h2>
 
@@ -20,9 +18,7 @@
 
     <p class="price">${{ comic.price }}</p>
 
-    <p class="description">
-      {{ comic.description }}
-    </p>
+    <p>{{ comic.description }}</p>
 
     <button class="buy-btn" (click)="addToCart()">
       Add to Cart
