@@ -1,0 +1,27 @@
+
+
+<h2>Admin Panel</h2>
+
+<!-- CREATE FORM -->
+<div>
+  <h3>Create Comic</h3>
+
+  <input [(ngModel)]="newComic.title" placeholder="Title" />
+  <input [(ngModel)]="newComic.author" placeholder="Author" />
+  <input [(ngModel)]="newComic.publisher" placeholder="Publisher" />
+  <input [(ngModel)]="newComic.price" type="number" placeholder="Price" />
+  <textarea [(ngModel)]="newComic.description" placeholder="Description"></textarea>
+
+  <button (click)="createComic()">Create</button>
+</div>
+
+<hr>
+
+<!-- LIST -->
+<h3>Comics</h3>
+
+<div *ngFor="let comic of comics">
+  <p>
+    {{ comic.title }} - ${{ comic.price }}
+  </p>
+</div>

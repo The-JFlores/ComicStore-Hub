@@ -10,6 +10,12 @@ header('Content-Type: application/json');
 require_once '../../config/database.php';
 require_once '../../models/Comic.php';
 
+// HANDLE PREFLIGHT (CLAVE)
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
 // Get JSON input
 $data = json_decode(file_get_contents("php://input"));
 

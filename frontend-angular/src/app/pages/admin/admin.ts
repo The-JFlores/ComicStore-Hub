@@ -1,0 +1,53 @@
+
+
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ComicService } from '../../services/comic';
+import { Comic } from '../../models/comic';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-admin',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './admin.html',
+  styleUrl: './admin.css'
+})
+export class Admin {
+
+  private comicService = inject(ComicService);
+
+  comics: Comic[] = [];
+
+  // Form model
+  newComic = {
+    title: '',
+    author: '',
+    publisher: '',
+    genreID: 1,
+    price: 0,
+    description: '',
+    cover_image: 'test.jpg',
+    file_path: 'test.pdf'
+  };
+
+  ngOnInit() {
+    this.loadComics();
+  }
+
+  loadComics() {
+    this.comicService.getComics().subscribe(data => {
+      this.comics = data || [];
+    });
+  }
+
+  createComic() {
+    this.comicService.addComic(this.newComic as any).subscribe({
+      next: () => {
+        console.log("Comic created");
+        this.loadComics();
+      },
+      error: (err) => console.error(err)
+    });
+  }
+}
