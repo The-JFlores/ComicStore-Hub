@@ -30,7 +30,7 @@ export class Cart {
     this.total = this.cartService.getTotal();
   }
 
-  clear() {
+  clearCart() {
     this.cartService.clearCart();
     this.items = [];
     this.total = 0;
