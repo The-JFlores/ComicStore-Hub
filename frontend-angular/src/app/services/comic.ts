@@ -13,9 +13,16 @@ export class ComicService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost/comicstore_hub/api';
 
-  // GET
+   // 🔹 GET ALL
   getComics(): Observable<Comic[]> {
     return this.http.get<Comic[]>(`${this.apiUrl}/comics/get.php`);
+  }
+
+  // GET BY ID
+  getComicById(id: number) {
+    return this.http.get<Comic>(
+      `${this.apiUrl}/comics/getById.php?id=${id}`
+    );
   }
 
   // DELETE
@@ -42,12 +49,12 @@ export class ComicService {
   updateComic(comic: Comic) {
   return this.http.post(
     `${this.apiUrl}/comics/update.php`,
-    comic,
-    {
-      headers: {
-        'Content-Type': 'application/json'
+      comic,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-    }
-  );
-}
+    );
+  }
 }

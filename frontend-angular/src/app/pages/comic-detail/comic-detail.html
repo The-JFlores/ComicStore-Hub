@@ -1,6 +1,4 @@
-
-
-<div class="detail-container" *ngIf="comic">
+<div *ngIf="comic; else loading" class="detail-container">
 
   <div class="image-section">
     <img 
@@ -26,3 +24,8 @@
   </div>
 
 </div>
+
+<!-- 🔥 LOADING -->
+<ng-template #loading>
+  <p>Loading comic...</p>
+</ng-template>

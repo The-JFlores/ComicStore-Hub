@@ -1,6 +1,7 @@
 
 
 import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ComicService } from '../../services/comic';
@@ -17,40 +18,30 @@ import { CartService } from '../../services/cart';
 export class ComicDetail {
 
   private route = inject(ActivatedRoute);
+  private cd = inject(ChangeDetectorRef);
   private comicService = inject(ComicService);
   private cartService = inject(CartService);
 
   comic: Comic | null = null;
 
   ngOnInit() {
-    const id = Number(this.route.snapshot.params['id']);
+  const id = Number(this.route.snapshot.params['id']);
 
-    // 🔥 1. SIEMPRE mostramos algo (mock inicial)
-    this.comic = {
-      comicID: id,
-      title: "Batman: Year One",
-      author: "Frank Miller",
-      publisher: "DC Comics",
-      genreID: 1,
-      genreName: "Superhero",
-      price: 9.99,
-      description: "The origin story of Batman in a modern retelling.",
-      cover_image: "test.jpg",
-      file_path: "test.pdf",
-      created_at: ""
-    };
+  this.comicService.getComicById(id).subscribe({
+    next: (data) => {
+      console.log("DATA FROM API:", data);
 
-    // 🔄 2. Luego intentamos backend (si hay datos reales)
-    this.comicService.getComics().subscribe(data => {
-      if (data && data.length > 0) {
-        const found = data.find(c => c.comicID === id);
-        if (found) {
-          this.comic = found;
-        }
-      }
-    });
-  }
+      this.comic = data;
+      
+      this.cd.detectChanges();
 
+      console.log("COMIC SET:", this.comic);
+    },
+    error: (err) => {
+      console.error("ERROR:", err);
+    }
+  });
+}
   // Add comic to cart
   addToCart() {
     if (this.comic) {
