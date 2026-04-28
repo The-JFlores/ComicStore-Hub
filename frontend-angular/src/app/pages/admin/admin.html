@@ -30,4 +30,24 @@
     Delete
   </button>
 
+   <button (click)="selectComic(comic)">
+    Edit
+  </button>
+
+</div>
+
+<div *ngIf="selectedComic">
+
+  <h3>Edit Comic</h3>
+
+  <input [(ngModel)]="selectedComic.title" placeholder="Title" />
+  <input [(ngModel)]="selectedComic.author" placeholder="Author" />
+  <input [(ngModel)]="selectedComic.publisher" placeholder="Publisher" />
+  <input [(ngModel)]="selectedComic.price" type="number" placeholder="Price" />
+  <textarea [(ngModel)]="selectedComic.description" placeholder="Description"></textarea>
+
+  <button (click)="updateComic()">
+    Save
+  </button>
+
 </div>

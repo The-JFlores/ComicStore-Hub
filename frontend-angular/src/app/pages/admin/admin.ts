@@ -16,7 +16,8 @@ import { FormsModule } from '@angular/forms';
 export class Admin {
 
   private comicService = inject(ComicService);
-
+  
+  selectedComic: Comic | null = null;
   comics: Comic[] = [];
 
   // Form model
@@ -59,4 +60,19 @@ export class Admin {
       error: (err) => console.error(err)
     });
   }
+  selectComic(comic: Comic) {
+  this.selectedComic = { ...comic };
+}
+  updateComic() {
+    if (!this.selectedComic) return;
+
+    this.comicService.updateComic(this.selectedComic).subscribe({
+      next: () => {
+        console.log("Updated");
+        this.selectedComic = null; // cerrar formulario
+        this.loadComics(); // refrescar lista
+      },
+      error: (err) => console.error(err)
+    });
+ }
 }

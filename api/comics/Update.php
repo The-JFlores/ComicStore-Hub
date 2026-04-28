@@ -23,7 +23,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 try {
 
-    if (empty($data->comicID)) {
+    if (!$data || !isset($data->comicID)) {
         http_response_code(400);
         echo json_encode(["message" => "comicID is required"]);
         exit;
