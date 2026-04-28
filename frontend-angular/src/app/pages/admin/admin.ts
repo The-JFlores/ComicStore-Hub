@@ -50,4 +50,13 @@ export class Admin {
       error: (err) => console.error(err)
     });
   }
+  deleteComic(id: number) {
+    this.comicService.deleteComic(id).subscribe({
+      next: () => {
+        console.log("Deleted");
+        this.loadComics();
+      },
+      error: (err) => console.error(err)
+    });
+  }
 }

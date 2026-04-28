@@ -2,7 +2,7 @@
 
 <h2>Admin Panel</h2>
 
-<!-- CREATE FORM -->
+<!-- CREATE -->
 <div>
   <h3>Create Comic</h3>
 
@@ -21,7 +21,13 @@
 <h3>Comics</h3>
 
 <div *ngFor="let comic of comics">
+
   <p>
     {{ comic.title }} - ${{ comic.price }}
   </p>
+
+  <button (click)="deleteComic(comic.comicID!)">
+    Delete
+  </button>
+
 </div>

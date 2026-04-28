@@ -1,5 +1,3 @@
-
-
 <?php
 
 error_reporting(E_ALL);
@@ -7,9 +5,10 @@ ini_set('display_errors', 1);
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type');
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Content-Type: application/json');
 
+// Handle preflight
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
@@ -23,7 +22,8 @@ $data = json_decode(file_get_contents("php://input"));
 
 try {
 
-    if (empty($data->comicID)) {
+    // Validate input
+    if (!$data || !isset($data->comicID)) {
         http_response_code(400);
         echo json_encode(["message" => "comicID is required"]);
         exit;

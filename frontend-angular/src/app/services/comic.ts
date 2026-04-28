@@ -23,11 +23,6 @@ export class ComicService {
   return this.http.post(
     `${this.apiUrl}/comics/delete.php`,
     { comicID: id },
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
   );
 }
 
