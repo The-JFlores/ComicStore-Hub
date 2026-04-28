@@ -1,85 +1,58 @@
 
 
-/* NAVBAR */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 25px;
-  background-color: #111;
-  color: white;
-}
-
-.logo {
-  margin: 0;
-}
-
-/* CART ICON */
-.cart-icon {
-  cursor: pointer;
-  font-size: 22px;
-  position: relative;
-}
-
-.cart-count {
-  position: absolute;
-  top: -6px;
-  right: -10px;
-  background: red;
-  color: white;
-  border-radius: 50%;
-  padding: 3px 7px;
-  font-size: 12px;
-}
-
-/* GRID (🔥 FIX CLAVE) */
 .catalog-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 250px); /* tamaño fijo */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
-
-  justify-content: center; /* 🔥 CENTRA TODO */
-  padding: 30px;
+  padding: 20px;
 }
 
-/* CARD */
 .comic-card {
-  width: 250px; /* 🔥 IMPORTANTE */
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 12px;
   overflow: hidden;
-  transition: 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.25s ease;
+  cursor: pointer;
 }
 
 .comic-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
-/* IMAGE */
 .comic-image {
   width: 100%;
-  height: 250px;
+  height: 260px;
   object-fit: cover;
 }
 
-/* INFO */
 .comic-info {
-  padding: 10px;
+  padding: 12px;
   text-align: center;
 }
 
-/* BUTTON */
+.author {
+  font-size: 14px;
+  color: #777;
+}
+
+.price {
+  font-weight: bold;
+  margin: 8px 0;
+}
+
 .cart-btn {
   width: 100%;
   padding: 8px;
-  background-color: #2d89ef;
+  background: #2d89ef;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .cart-btn:hover {
-  background-color: #1b5fbd;
+  background: #1b5fbf;
 }

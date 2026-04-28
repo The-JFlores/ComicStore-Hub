@@ -15,9 +15,6 @@ import { RouterModule } from '@angular/router';
 export class Catalog implements OnInit {
 
   comics: Comic[] = [];
-  cartItems: Comic[] = [];
-  total: number = 0;
-  cartCount: number = 0;
   errorMessage: string = '';
 
   private comicService = inject(ComicService);
@@ -27,9 +24,6 @@ export class Catalog implements OnInit {
 
   ngOnInit(): void {
     this.loadComics();
-    this.cartItems = this.cartService.getItems();
-    this.total = this.cartService.getTotal ();
-    this.cartCount = this.cartService.getCount();
   }
 
   // Navigate to cart page
@@ -42,7 +36,6 @@ goToCart() {
   this.comicService.getComics().subscribe({
     next: (data) => {
 
-      // 🔥 SI NO HAY DATOS, USA MOCK
       if (!data || data.length === 0) {
         this.comics = [
           {
@@ -76,31 +69,15 @@ goToCart() {
    // Add comic to cart
   addToCart(comic: Comic) {
     this.cartService.addToCart(comic);
-
-    // Update local cart view
-    this.cartItems = this.cartService.getItems();
-    this.total = this.cartService.getTotal();
-    this.cartCount = this.cartService.getCount();
-
-    console.log("Cart:", this.cartItems);
   }
   // Remove item from cart
   removeFromCart(index: number) {
     this.cartService.removeFromCart(index);
-
-    // Update local cart view
-    this.cartItems = this.cartService.getItems();
-    this.total = this.cartService.getTotal();
-    this.cartCount = this.cartService.getCount();
   }
 
   // Clear all items from cart
   clearCart() {
     this.cartService.clearCart();
-
-    this.cartItems = [];
-    this.total = 0;
-    this.cartCount = 0;
   }
 
     goToDetail(id: number) {
