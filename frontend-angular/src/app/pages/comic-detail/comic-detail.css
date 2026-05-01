@@ -1,46 +1,57 @@
-
-
 .detail-container {
   display: flex;
-  gap: 40px;
+  justify-content: center;
   padding: 40px;
-  align-items: flex-start;
 }
 
-/* IMAGE */
+.detail-card {
+  display: flex;
+  gap: 40px;
+  max-width: 900px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
 .image-section img {
-  width: 350px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  width: 300px;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
-/* INFO */
 .info-section {
-  max-width: 500px;
+  flex: 1;
 }
 
-.info-section h2 {
-  margin-bottom: 10px;
+.info-section h1 {
+  margin: 0;
+}
+
+.author {
+  color: #666;
+  margin: 8px 0;
+}
+
+.publisher {
+  font-size: 14px;
+  color: #999;
 }
 
 .price {
-  font-size: 26px;
+  font-size: 22px;
   font-weight: bold;
   margin: 15px 0;
-  color: #2d89ef;
 }
 
 .description {
-  margin-top: 10px;
-  color: #555;
-  line-height: 1.5;
+  margin-bottom: 20px;
 }
 
-/* BUTTON */
 .buy-btn {
-  margin-top: 20px;
-  padding: 12px 18px;
-  background-color: #2d89ef;
+  padding: 10px 15px;
+  background: #2d89ef;
   color: white;
   border: none;
   border-radius: 6px;
@@ -49,5 +60,5 @@
 }
 
 .buy-btn:hover {
-  background-color: #1b5fbd;
+  background: #1b5fbf;
 }

@@ -18,31 +18,22 @@ import { CartService } from '../../services/cart';
 export class ComicDetail {
 
   private route = inject(ActivatedRoute);
-  private cd = inject(ChangeDetectorRef);
   private comicService = inject(ComicService);
   private cartService = inject(CartService);
+  private cd = inject(ChangeDetectorRef);
 
   comic: Comic | null = null;
 
   ngOnInit() {
-  const id = Number(this.route.snapshot.params['id']);
+    const id = Number(this.route.snapshot.params['id']);
 
-  this.comicService.getComicById(id).subscribe({
-    next: (data) => {
-      console.log("DATA FROM API:", data);
+    this.comicService.getComicById(id).subscribe((data) => {
+          this.comic = data;
 
-      this.comic = data;
-      
       this.cd.detectChanges();
+    });
+  }
 
-      console.log("COMIC SET:", this.comic);
-    },
-    error: (err) => {
-      console.error("ERROR:", err);
-    }
-  });
-}
-  // Add comic to cart
   addToCart() {
     if (this.comic) {
       this.cartService.addToCart(this.comic);

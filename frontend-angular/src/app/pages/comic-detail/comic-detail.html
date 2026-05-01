@@ -1,31 +1,32 @@
-<div *ngIf="comic; else loading" class="detail-container">
+<!-- 🔥 LOADING -->
+<div *ngIf="!comic">
+  <p>Loading comic...</p>
+</div>
 
-  <div class="image-section">
-    <img 
-      [src]="'http://localhost/comicstore_hub/uploads/' + comic.cover_image"
-      [alt]="comic.title"
-    />
-  </div>
+<!-- 🔥 DETAIL -->
+<div class="detail-container" *ngIf="comic">
 
-  <div class="info-section">
-    <h2>{{ comic.title }}</h2>
+  <div class="detail-card">
 
-    <p><strong>Author:</strong> {{ comic.author }}</p>
-    <p><strong>Publisher:</strong> {{ comic.publisher }}</p>
-    <p><strong>Genre:</strong> {{ comic.genreName }}</p>
+    <div class="image-section">
+      <img 
+        [src]="'http://localhost/comicstore_hub/uploads/' + comic.cover_image"
+        [alt]="comic.title"
+      />
+    </div>
 
-    <p class="price">${{ comic.price }}</p>
+    <div class="info-section">
+      <h1>{{ comic.title }}</h1>
+      <p class="author">by {{ comic.author }}</p>
+      <p class="publisher">{{ comic.publisher }}</p>
+      <p class="price">${{ comic.price }}</p>
+      <p class="description">{{ comic.description }}</p>
 
-    <p>{{ comic.description }}</p>
+      <button class="buy-btn" (click)="addToCart()">
+        Add to Cart
+      </button>
+    </div>
 
-    <button class="buy-btn" (click)="addToCart()">
-      Add to Cart
-    </button>
   </div>
 
 </div>
-
-<!-- 🔥 LOADING -->
-<ng-template #loading>
-  <p>Loading comic...</p>
-</ng-template>
