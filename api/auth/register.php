@@ -14,11 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once '../../config/database.php';
 
 $data = json_decode(file_get_contents("php://input"));
-
 $name = trim($data->name ?? '');
 $email = trim($data->email ?? '');
 $password = $data->password ?? '';
-
 $errors = [];
 
 if ($name === '') {
@@ -36,7 +34,6 @@ if (strlen($password) < 6) {
 if (!empty($errors)) {
 
     http_response_code(400);
-
     echo json_encode([
         "success" => false,
         "errors" => $errors
@@ -55,20 +52,17 @@ try {
     ";
 
     $checkStmt = $db->prepare($checkQuery);
-
     $checkStmt->bindValue(':email', $email);
-
     $checkStmt->execute();
 
     if ($checkStmt->fetch()) {
 
         http_response_code(400);
-
         echo json_encode([
             "success" => false,
             "message" => "Email already registered."
         ]);
-
+        
         exit();
     }
 
