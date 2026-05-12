@@ -42,12 +42,15 @@ export class CartService {
     this.items = [];
 
     localStorage.removeItem('cartItems');
-    
+
     this.cartCount.next(0);
   }
 
   getTotal(): number {
-    return this.items.reduce((total, item) => total + item.price, 0);
+    return this.items.reduce(
+      (total, item) => total + Number(item.price),
+      0
+    );
   }
 
   getCount(): number {
