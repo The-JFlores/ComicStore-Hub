@@ -8,27 +8,41 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CartService {
 
-  private items: Comic[] = [];
+  private items: Comic[] = JSON.parse(
+  localStorage.getItem('cartItems') || '[]');
 
-  private cartCount = new BehaviorSubject<number>(0);
+  private cartCount = new BehaviorSubject<number>(this.items.length);
   cartCount$ = this.cartCount.asObservable();
 
   addToCart(comic: Comic) {
     this.items.push(comic);
-    this.cartCount.next(this.items.length);
-  }
+    localStorage.setItem(
+    'cartItems',
+    JSON.stringify(this.items)
+  );
+  this.cartCount.next(this.items.length);
+}
 
   getItems(): Comic[] {
     return this.items;
   }
 
   removeFromCart(index: number) {
+
     this.items.splice(index, 1);
+
+    localStorage.setItem(
+  'cartItems',
+  JSON.stringify(this.items)
+);
     this.cartCount.next(this.items.length);
   }
 
   clearCart() {
     this.items = [];
+
+    localStorage.removeItem('cartItems');
+    
     this.cartCount.next(0);
   }
 

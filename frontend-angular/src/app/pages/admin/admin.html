@@ -24,10 +24,11 @@
   <div class="comic-list">
     <div *ngFor="let comic of comics" class="comic-item">
       <div class="comic-info">
-        <h3>{{ comic.title }}</h3>
-        <p>{{ comic.author }}</p>
-        <p>${{ comic.price }}</p>
-      </div>
+  <h3>{{ comic.title }}</h3>
+  <p><strong>Author:</strong> {{ comic.author }}</p>
+  <p><strong>Publisher:</strong> {{ comic.publisher }}</p>
+  <p><strong>Price:</strong> ${{ comic.price }}</p>
+</div>
 
       <div class="actions">
         <button
