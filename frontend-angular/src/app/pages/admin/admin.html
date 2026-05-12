@@ -1,53 +1,67 @@
+<div class="admin-container">
+  <h1 class="admin-title">
+    Admin Dashboard
+  </h1>
 
+  <!-- CREATE -->
+  <div class="form-card">
+    <h2>Create Comic</h2>
+    <div class="form-grid">
+      <input [(ngModel)]="newComic.title" placeholder="Title" />
+      <input [(ngModel)]="newComic.author" placeholder="Author" />
+      <input [(ngModel)]="newComic.publisher" placeholder="Publisher" />
+      <input [(ngModel)]="newComic.price" type="number" placeholder="Price" /> 
+      <input type="file" (change)="onFileSelected($event)"/>
+      <textarea [(ngModel)]="newComic.description" placeholder="Description"></textarea>
+    </div>
 
-<h2>Admin Panel</h2>
+    <button class="create-btn" (click)="createComic()">
+      Create Comic
+    </button>
+  </div>
 
-<!-- CREATE -->
-<div>
-  <h3>Create Comic</h3>
+  <!-- LIST -->
+  <div class="comic-list">
+    <div *ngFor="let comic of comics" class="comic-item">
+      <div class="comic-info">
+        <h3>{{ comic.title }}</h3>
+        <p>{{ comic.author }}</p>
+        <p>${{ comic.price }}</p>
+      </div>
 
-  <input [(ngModel)]="newComic.title" placeholder="Title" />
-  <input [(ngModel)]="newComic.author" placeholder="Author" />
-  <input [(ngModel)]="newComic.publisher" placeholder="Publisher" />
-  <input [(ngModel)]="newComic.price" type="number" placeholder="Price" />
-  <textarea [(ngModel)]="newComic.description" placeholder="Description"></textarea>
+      <div class="actions">
+        <button
+          class="edit-btn"
+          (click)="selectComic(comic)"
+        >
+          Edit
+        </button>
 
-  <button (click)="createComic()">Create</button>
-</div>
+        <button
+          class="delete-btn"
+          (click)="deleteComic(comic.comicID!)"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- EDIT -->
+  <div *ngIf="selectedComic" class="edit-form">
 
-<hr>
+    <h3>Edit Comic</h3>
 
-<!-- LIST -->
-<h3>Comics</h3>
+    <div class="form-grid">
+      <input [(ngModel)]="selectedComic.title" />
+      <input [(ngModel)]="selectedComic.author" />
+      <input [(ngModel)]="selectedComic.publisher" />
+      <input [(ngModel)]="selectedComic.price" type="number" />
+      <input type="file" (change)="onFileSelected($event)"/>
+      <textarea [(ngModel)]="selectedComic.description"></textarea>
+    </div>
 
-<div *ngFor="let comic of comics">
-
-  <p>
-    {{ comic.title }} - ${{ comic.price }}
-  </p>
-
-  <button (click)="deleteComic(comic.comicID!)">
-    Delete
-  </button>
-
-   <button (click)="selectComic(comic)">
-    Edit
-  </button>
-
-</div>
-
-<div *ngIf="selectedComic">
-
-  <h3>Edit Comic</h3>
-
-  <input [(ngModel)]="selectedComic.title" placeholder="Title" />
-  <input [(ngModel)]="selectedComic.author" placeholder="Author" />
-  <input [(ngModel)]="selectedComic.publisher" placeholder="Publisher" />
-  <input [(ngModel)]="selectedComic.price" type="number" placeholder="Price" />
-  <textarea [(ngModel)]="selectedComic.description" placeholder="Description"></textarea>
-
-  <button (click)="updateComic()">
-    Save
-  </button>
-
+    <button class="create-btn" (click)="updateComic()">
+      Save Changes
+    </button>
+  </div>
 </div>

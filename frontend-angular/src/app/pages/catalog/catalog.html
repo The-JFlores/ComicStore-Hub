@@ -2,10 +2,8 @@
 
 <!-- CATALOG -->
 <div class="catalog-container">
-
   <div 
     *ngFor="let comic of comics" class="comic-card">
-
     <img
       class="comic-image"
       [src]="'http://localhost/comicstore_hub/uploads/' + comic.cover_image"
@@ -14,21 +12,14 @@
     />
 
     <div class="comic-info">
-
       <h3 (click)="goToDetail(comic.comicID!)">
         {{ comic.title }}
       </h3>
-
       <p class="author">{{ comic.author }}</p>
-
       <p class="price">${{ comic.price }}</p>
-
       <button class="cart-btn" (click)="addToCart(comic)">
         Add to Cart
       </button>
-
     </div>
-
   </div>
-
 </div>

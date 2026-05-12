@@ -13,7 +13,7 @@ import { CartService } from '../../services/cart';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './comic-detail.html',
-  styleUrl: './comic-detail.css'
+  styleUrls: ['./comic-detail.css']
 })
 export class ComicDetail {
 

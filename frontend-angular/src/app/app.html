@@ -5,10 +5,14 @@
     ComicStore Hub
   </h1>
 
-  <div class="cart-icon" routerLink="/cart">
+  <div
+    class="cart-icon"
+    routerLink="/cart"
+    *ngIf="!isAdminPage"
+  >
     🛒
     <span class="cart-count">{{ cartCount }}</span>
-</div>
+  </div>
 
 </div>
 

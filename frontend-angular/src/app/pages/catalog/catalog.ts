@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './catalog.html',
-  styleUrl: './catalog.css'
+  styleUrls: ['./catalog.css']
 })
 export class Catalog implements OnInit {
 
@@ -78,6 +78,7 @@ goToCart() {
   // Clear all items from cart
   clearCart() {
     this.cartService.clearCart();
+
   }
 
     goToDetail(id: number) {

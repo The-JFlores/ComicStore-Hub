@@ -10,7 +10,7 @@ import { Comic } from '../../models/comic';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './cart.html',
-  styleUrl: './cart.css'
+  styleUrls: ['./cart.css']
 })
 export class Cart {
 

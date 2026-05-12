@@ -57,4 +57,14 @@ export class ComicService {
       }
     );
   }
+
+  uploadImage(file: File) {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  return this.http.post<any>(
+    `${this.apiUrl}/upload.php`,
+    formData
+  );
+}
 }
