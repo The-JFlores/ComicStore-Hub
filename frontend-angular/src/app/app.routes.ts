@@ -5,6 +5,10 @@ export const routes: Routes = [
   // Default routes
   { path: '', component: Catalog },
   { path: 'catalog', component: Catalog },
+  { path: 'login', loadComponent: () =>
+      import('./pages/login/login')
+        .then(m => m.Login)
+  },
 
   // Cart
   {
