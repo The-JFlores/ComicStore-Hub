@@ -1,9 +1,15 @@
-
-
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd, RouterOutlet, RouterLink} from '@angular/router';
+import {
+  Router,
+  NavigationEnd,
+  RouterOutlet,
+  RouterLink
+} from '@angular/router';
+
 import { CartService } from './services/cart';
+import { AuthService } from './services/auth';
+
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -13,32 +19,59 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./app.css']
 })
 export class App {
-  
+
+  currentUser: any = null;
+
+  cartCount: number = 0;
+
+  isAdminPage: boolean = false;
+
   private cartService = inject(CartService);
-    cartCount: number = 0;
+
+  private authService = inject(AuthService);
+
   private router = inject(Router);
-    isAdminPage: boolean = false;
 
   ngOnInit() {
 
-  // 🔥 contador carrito
-  this.cartService.cartCount$.subscribe(count => {
-    this.cartCount = count;
-  });
+    this.authService.checkAuth();
 
-  // 🔥 detectar ruta actual
-  this.checkIfAdmin();
+    this.authService.currentUser$
+      .subscribe(user => {
 
-  // 🔥 detectar cambios de ruta
-  this.router.events
-    .pipe(filter(event => event instanceof NavigationEnd))
-    .subscribe(() => {
-      this.checkIfAdmin();
-    });
-}
+        console.log('AUTH USER:', user);
 
-checkIfAdmin() {
-  this.isAdminPage = this.router.url.includes('/admin');
-}
-  
+        this.currentUser = user;
+      });
+
+    this.cartService.cartCount$
+      .subscribe(count => {
+
+        this.cartCount = count;
+      });
+
+    this.checkIfAdmin();
+
+    this.router.events
+      .pipe(
+        filter(event =>
+          event instanceof NavigationEnd
+        )
+      )
+      .subscribe(() => {
+
+        this.checkIfAdmin();
+      });
+  }
+
+  checkIfAdmin() {
+
+    this.isAdminPage =
+      this.router.url.includes('/admin');
+  }
+
+  logout() {
+
+    this.authService.logout();
+  }
 }

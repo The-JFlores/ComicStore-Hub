@@ -1,17 +1,51 @@
 
+
 <div class="navbar">
 
   <h1 class="logo" routerLink="/catalog">
     ComicStore Hub
   </h1>
 
-  <div
-    class="cart-icon"
-    routerLink="/cart"
-    *ngIf="!isAdminPage"
-  >
-    🛒
-    <span class="cart-count">{{ cartCount }}</span>
+  <div class="right-section">
+
+    <div
+      class="cart-icon"
+      routerLink="/cart"
+      *ngIf="!isAdminPage"
+    >
+      🛒
+      <span class="cart-count">
+        {{ cartCount }}
+      </span>
+    </div>
+
+    <div class="auth-section">
+
+      <ng-container *ngIf="currentUser; else guestLinks">
+
+        <span class="welcome-text">
+          Welcome {{ currentUser.name }}
+        </span>
+
+        <button 
+        class="logout-btn"
+        (click)="logout()"
+        >
+        Logout
+      </button>
+          
+      </ng-container>
+
+      <ng-template #guestLinks>
+
+        <a routerLink="/login">Login</a>
+
+        <a routerLink="/register">Register</a>
+
+      </ng-template>
+
+    </div>
+
   </div>
 
 </div>
