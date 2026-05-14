@@ -1,5 +1,4 @@
 
-
 <div class="cart-container">
 
   <h2>Your Cart</h2>
@@ -11,28 +10,62 @@
   <div *ngFor="let item of items; let i = index" class="cart-item">
 
     <img
-  class="cart-image"
-  [src]="'http://localhost/comicstore_hub/uploads/' + item.cover_image"
-  [alt]="item.title"
-/>
+      class="cart-image"
+      [src]="'http://localhost/comicstore_hub/uploads/' + item.cover_image"
+      [alt]="item.title"
+    />
 
     <div class="info">
       <h3>{{ item.title }}</h3>
       <p>${{ item.price }}</p>
     </div>
 
-    <button class="remove-btn" (click)="remove(i)">
+    <button
+      class="remove-btn"
+      (click)="remove(i)"
+    >
       Remove
     </button>
 
   </div>
 
-  <div class="total" *ngIf="items.length > 0">
-    <h3>Total: ${{ total.toFixed(2) }}</h3>
+  <div
+    class="total"
+    *ngIf="items.length > 0"
+  >
 
-    <button class="clear-btn" (click)="clearCart()">
+    <h3>
+      Total: ${{ total.toFixed(2) }}
+    </h3>
+
+    <button
+      class="clear-btn"
+      (click)="clearCart()"
+    >
       Clear Cart
     </button>
+
+    <button
+      class="checkout-btn"
+      (click)="checkout()"
+    >
+      Checkout
+    </button>
+
+    <p
+      class="success-message"
+      *ngIf="successMessage"
+    >
+      {{ successMessage }}
+    </p>
+
+    <p
+      class="error-message"
+      *ngIf="errorMessage"
+    >
+      {{ errorMessage }}
+    </p>
+
   </div>
 
 </div>

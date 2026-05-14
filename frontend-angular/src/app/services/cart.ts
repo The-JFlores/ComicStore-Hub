@@ -1,12 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Comic } from '../models/comic';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
+
+    private http = inject(HttpClient);
+
+  private apiUrl =
+    'http://localhost/comicstore_hub/api/orders';
 
   private items: Comic[] = JSON.parse(
   localStorage.getItem('cartItems') || '[]');
@@ -56,4 +62,17 @@ export class CartService {
   getCount(): number {
     return this.items.length;
   }
+    checkout() {
+
+    return this.http.post<any>(
+      `${this.apiUrl}/create.php`,
+      {
+        items: this.items
+      },
+      {
+        withCredentials: true
+      }
+    );
+  }
 }
+
