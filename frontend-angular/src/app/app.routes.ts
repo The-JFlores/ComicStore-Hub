@@ -19,6 +19,14 @@ export const routes: Routes = [
         .then(m => m.Register)
   },
 
+    // Orders
+  {
+    path: 'orders',
+    loadComponent: () =>
+      import('./pages/orders/orders')
+        .then(m => m.Orders)
+  },
+
   // Cart
   {
     path: 'cart',
@@ -44,5 +52,6 @@ export const routes: Routes = [
   },
 
   // Fallback (ALWAYS LAST)
-  { path: '**', redirectTo: 'catalog' }
+  { path: '**', redirectTo: 'catalog' },
+
 ];
