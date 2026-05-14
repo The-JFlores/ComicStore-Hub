@@ -1,17 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import {
-  Router,
-  NavigationEnd,
-  RouterOutlet,
-  RouterLink
-} from '@angular/router';
-
+import { Router, NavigationEnd, RouterOutlet, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
-
 import { CartService } from './services/cart';
-
 import { AuthService } from './services/auth';
 
 @Component({
@@ -27,9 +18,7 @@ import { AuthService } from './services/auth';
 export class App {
 
   currentUser: any = null;
-
   cartCount: number = 0;
-
   isAdminPage: boolean = false;
 
   private cartService =
@@ -41,6 +30,9 @@ export class App {
   private router =
     inject(Router);
 
+    private cdr =
+  inject(ChangeDetectorRef);
+
   ngOnInit() {
 
     this.authService.checkAuth();
@@ -49,6 +41,7 @@ export class App {
       .subscribe(user => {
 
         this.currentUser = user;
+        this.cdr.detectChanges();
 
         this.checkIfAdmin();
       });
