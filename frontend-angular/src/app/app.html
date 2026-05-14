@@ -19,13 +19,22 @@
       </span>
     </div>
 
-    <div class="auth-section">
+      <div
+      class="auth-section"
+      >
 
       <ng-container *ngIf="currentUser; else guestLinks">
 
         <span class="welcome-text">
           Welcome {{ currentUser.name }}
         </span>
+                <a
+  *ngIf="currentUser.role === 'admin'"
+  routerLink="/admin"
+  class="admin-link"
+>
+  Admin
+</a>
 
         <button 
         class="logout-btn"

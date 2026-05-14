@@ -65,3 +65,9 @@
   text-decoration: none;
   font-weight: 500;
 }
+
+.admin-link {
+  color: #4cc9f0 !important;
+  text-decoration: none;
+  font-weight: 600;
+}

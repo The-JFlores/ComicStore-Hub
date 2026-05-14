@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import {
   Router,
   NavigationEnd,
@@ -7,14 +8,19 @@ import {
   RouterLink
 } from '@angular/router';
 
-import { CartService } from './services/cart';
-import { AuthService } from './services/auth';
-
 import { filter } from 'rxjs/operators';
+
+import { CartService } from './services/cart';
+
+import { AuthService } from './services/auth';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet, RouterLink],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink
+  ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
@@ -26,11 +32,14 @@ export class App {
 
   isAdminPage: boolean = false;
 
-  private cartService = inject(CartService);
+  private cartService =
+    inject(CartService);
 
-  private authService = inject(AuthService);
+  private authService =
+    inject(AuthService);
 
-  private router = inject(Router);
+  private router =
+    inject(Router);
 
   ngOnInit() {
 
@@ -39,9 +48,9 @@ export class App {
     this.authService.currentUser$
       .subscribe(user => {
 
-        console.log('AUTH USER:', user);
-
         this.currentUser = user;
+
+        this.checkIfAdmin();
       });
 
     this.cartService.cartCount$
@@ -49,8 +58,6 @@ export class App {
 
         this.cartCount = count;
       });
-
-    this.checkIfAdmin();
 
     this.router.events
       .pipe(

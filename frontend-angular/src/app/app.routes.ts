@@ -1,3 +1,5 @@
+
+import { adminGuard } from './guards/admin-guard';
 import { Routes } from '@angular/router';
 import { Catalog } from './pages/catalog/catalog';
 
@@ -32,7 +34,13 @@ export const routes: Routes = [
   // Admin panel
   {
     path: 'admin',
-    loadComponent: () => import('./pages/admin/admin').then(m => m.Admin)
+     
+      canActivate: [adminGuard],
+
+      loadComponent: () =>
+      import('./pages/admin/admin')
+    .then(m => m.Admin)
+  
   },
 
   // Fallback (ALWAYS LAST)

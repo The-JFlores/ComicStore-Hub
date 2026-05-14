@@ -33,8 +33,15 @@ export class Login {
           console.log(response);
           this.authService['currentUserSubject']
   .next(response.user);
-          this.router.navigate(['/catalog']);
-        },
+          if (response.user.role === 'admin') {
+
+  this.router.navigate(['/admin']);
+
+} else {
+
+  this.router.navigate(['/catalog']);
+  }
+},
 
         error: (err) => {
           console.error(err);
@@ -43,6 +50,6 @@ export class Login {
 
             'Login failed';
         }
-      });
+      })
   }
 }

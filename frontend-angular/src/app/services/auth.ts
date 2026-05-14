@@ -13,42 +13,45 @@ export class AuthService {
     'http://localhost/comicstore_hub/api/auth';
 
   private currentUserSubject =
-    new BehaviorSubject<any>(null);
+    new BehaviorSubject<any | undefined>(undefined);
 
   currentUser$ =
     this.currentUserSubject.asObservable();
 
   checkAuth() {
 
-    this.http.get<any>(
-      `${this.apiUrl}/me.php`,
-      {
-        withCredentials: true
-      }
-    ).subscribe({
+  // limpiar usuario inmediatamente
+  this.currentUserSubject.next(null);
 
-      next: (response) => {
+  this.http.get<any>(
+    `${this.apiUrl}/me.php`,
+    {
+      withCredentials: true
+    }
+  ).subscribe({
 
-        if (response.loggedIn) {
+    next: (response) => {
 
-          this.currentUserSubject.next(
-            response.user
-          );
+      if (response.loggedIn) {
 
-        } else {
+        this.currentUserSubject.next(
+          response.user
+        );
 
-          this.currentUserSubject.next(null);
-
-        }
-      },
-
-      error: () => {
+      } else {
 
         this.currentUserSubject.next(null);
 
       }
-    });
-  }
+    },
+
+    error: () => {
+
+      this.currentUserSubject.next(null);
+
+    }
+  });
+}
 
   login(email: string, password: string) {
 
