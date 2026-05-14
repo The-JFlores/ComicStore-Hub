@@ -50,11 +50,30 @@ export class AuthService {
     });
   }
 
-    login(email: string, password: string) {
+  login(email: string, password: string) {
 
     return this.http.post<any>(
       `${this.apiUrl}/login.php`,
       {
+        email,
+        password
+      },
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  register(
+    name: string,
+    email: string,
+    password: string
+  ) {
+
+    return this.http.post<any>(
+      `${this.apiUrl}/register.php`,
+      {
+        name,
         email,
         password
       },
